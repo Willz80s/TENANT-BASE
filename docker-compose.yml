@@ -1,0 +1,29 @@
+
+services:
+  app:
+    container_name: tenant-base-app
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    container_name: tenant-base-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: tenantbase
+      POSTGRES_PASSWORD: tenantbase
+      POSTGRES_DB: tenantbase
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
