@@ -1,9 +1,14 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+
+  memberships Membership[]
 }
 
 model Tenant {
@@ -12,45 +17,22 @@ model Tenant {
   createdAt DateTime @default(now())
 
   memberships Membership[]
-  auditLogs  AuditLog[]
-}
-
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-
-  memberships Membership[]
-  auditLogs  AuditLog[]
 }
 
 model Membership {
   id        String   @id @default(cuid())
   role      Role
-  tenantId  String
   userId    String
-  createdAt DateTime @default(now())
-
-  tenant Tenant @relation(fields: [tenantId], references: [id])
-  user   User   @relation(fields: [userId], references: [id])
-
-  @@unique([tenantId, userId])
-}
-
-model AuditLog {
-  id        String   @id @default(cuid())
-  action    String
   tenantId  String
-  userId    String?
-  createdAt DateTime @default(now())
 
+  user   User   @relation(fields: [userId], references: [id])
   tenant Tenant @relation(fields: [tenantId], references: [id])
-  user   User?  @relation(fields: [userId], references: [id])
+
+  @@unique([userId, tenantId])
 }
 
 enum Role {
   OWNER
-  EDITOR
-  VIEWER
+  ADMIN
+  MEMBER
 }
