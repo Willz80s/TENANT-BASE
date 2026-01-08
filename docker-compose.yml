@@ -20,7 +20,7 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_USER: tenantbase
-      POSTGRES_PASSWORD: tenantbase
+      POSTGRES_PASSWORD: ${MY_P0SGRES_PASSWORD}
       POSTGRES_DB: tenantbase
     volumes:
       - postgres_data:/var/lib/postgresql/data
