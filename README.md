@@ -31,26 +31,6 @@ The project is designed to scale from a single organization to many tenants whil
 - **Zero local database setup required**
 
 ---
-
-## Architecture Overview
-
-┌──────────────┐
-│ Browser │
-└──────┬───────┘
-│
-┌──────▼────────┐
-│ Next.js App │
-│ (Docker) │
-│ App Router │
-│ Server-first │
-└──────┬────────┘
-│ Prisma Client
-┌──────▼────────┐
-│ PostgreSQL │
-│ (Docker) │
-│ Multi-tenant │
-└───────────────┘
-
 ---
 
 ## Multi-Tenancy Strategy
